@@ -21,4 +21,6 @@ public interface IJoeurService {
     JoueurEntity toEntity(ImputPlayerDto dto);
 
     Integer add (ImputPlayerDto dto);
+
+    Float avgTaille(String sport);
 }

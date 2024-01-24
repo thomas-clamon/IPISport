@@ -3,6 +3,8 @@ package com.example.ipisport2.controlers;
 import com.example.ipisport2.dto.ImputPlayerDto;
 import com.example.ipisport2.dto.playerDto;
 import com.example.ipisport2.entities.JoueurEntity;
+import com.example.ipisport2.enumeration.GenderEnum;
+import com.example.ipisport2.enumeration.Sport;
 import com.example.ipisport2.repository.JoueurRepository;
 import com.example.ipisport2.service.IJoeurService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,7 +82,7 @@ public class JoeurRessources {
     @PostMapping("add")
     public ResponseEntity ajouter (@RequestBody ImputPlayerDto body){
 
-        // Controle du body
+        // Controle du body sur les valeur obligatoire
         if (null == body.getNom())
             return new ResponseEntity("nom vide", HttpStatus.BAD_REQUEST);
         if (null == body.getPrenom())
@@ -90,7 +92,37 @@ public class JoeurRessources {
         if (null == body.getSport())
             return new ResponseEntity("sport vide", HttpStatus.BAD_REQUEST);
 
+        // Controle sur les enumeration
+        try {
+            Sport.valueOf(body.getSport());
+        } catch (Exception e){
+            return new ResponseEntity("sport inconnu", HttpStatus.BAD_REQUEST);
+
+        }
+
+        // Controle sur les enumeration
+        try {
+            GenderEnum.valueOf(body.getGenre());
+        } catch (Exception e){
+            return new ResponseEntity("genre inconnu", HttpStatus.BAD_REQUEST);
+
+        }
+
         Integer id = service.add(body);
         return new ResponseEntity(String.format("element ajoutée : %d;", id), HttpStatus.OK);
+    }
+
+    @GetMapping("avgTaille")
+    public ResponseEntity avgTaille(@RequestParam String sport){
+
+        // Controle sur les enumeration
+        try {
+            Sport.valueOf(sport);
+        } catch (Exception e){
+            return new ResponseEntity("sport inconnu", HttpStatus.BAD_REQUEST);
+
+        }
+        return new ResponseEntity(service.avgTaille(sport), HttpStatus.OK);
+
     }
 }

@@ -76,4 +76,26 @@ public class JoeurService implements IJoeurService{
         return entity.getID();
     }
 
+    @Override
+    public Float avgTaille(String sport) {
+        // on recupere la liste de joueur
+        List<JoueurEntity> list  = this.getALL();
+
+        // on definit un compteur qui correspond au sport
+        float bon_sport = 0;
+        // on definit la somme
+        float sum = 0;
+
+        for (int i = 0; i<list.size(); i++){
+
+            if (list.get(i).getSport().equals(sport)){
+                bon_sport++;
+                sum = sum + (float) list.get(i).getTaille();
+            }
+        }
+        if (bon_sport == 0)
+            return bon_sport;
+        return sum/bon_sport;
+    }
+
 }
