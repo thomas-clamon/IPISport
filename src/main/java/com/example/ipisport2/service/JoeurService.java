@@ -3,7 +3,10 @@ package com.example.ipisport2.service;
 import com.example.ipisport2.dto.ImputPlayerDto;
 import com.example.ipisport2.dto.MaxPlayerDto;
 import com.example.ipisport2.dto.playerDto;
+import com.example.ipisport2.dto.sportCountDto;
+import com.example.ipisport2.entities.ClubEntity;
 import com.example.ipisport2.entities.JoueurEntity;
+import com.example.ipisport2.repository.ClubRepository;
 import com.example.ipisport2.repository.JoueurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,9 @@ public class JoeurService implements IJoeurService{
 
     @Autowired
     private JoueurRepository repository;
+
+    @Autowired
+    private ClubRepository clubRepository;
     @Override
     public Boolean exist(Integer id) {
         return repository.existsById(id);
@@ -112,6 +118,26 @@ public class JoeurService implements IJoeurService{
     @Override
     public MaxPlayerDto maxTaille(String sport, String genre) {
         return repository.max2(sport, genre);
+    }
+
+    @Override
+    public List<sportCountDto> getSportCount() {
+        return repository.getSportCount();
+    }
+
+    @Override
+    public List<sportCountDto> getSportCount(String gender) {
+        return repository.getSportCount(gender);
+    }
+
+    public void addClubJoueur(Integer id, Integer idClub) {
+        JoueurEntity joueurEntity = repository.findById(id).get();
+        ClubEntity clubEntity = clubRepository.findById(idClub).get();
+
+        joueurEntity.getClubEntities().add(clubEntity);
+
+        repository.saveAndFlush(joueurEntity);
+
     }
 
 

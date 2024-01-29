@@ -151,4 +151,30 @@ public class JoeurRessources {
         return new ResponseEntity(service.maxTaille(sport, genre), HttpStatus.OK);
     }
 
+    @GetMapping("countBySport")
+    public ResponseEntity countBySport (@RequestParam String gender){
+        if (gender.equals("all")){
+            return new ResponseEntity(service.getSportCount(), HttpStatus.OK);
+        }
+        try {
+            GenderEnum.valueOf(gender);
+        }
+        catch (Exception e){
+            return new ResponseEntity("genre inconnu", HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity(service.getSportCount(gender), HttpStatus.OK);
+    }
+
+    @GetMapping ("addClub/{id}")
+    public ResponseEntity addClub (
+                @PathVariable String id,
+                @RequestParam Integer id_club){
+
+        Integer ID = Integer.parseInt(id);
+        service.addClubJoueur(ID, id_club);
+
+        return new ResponseEntity("club ajouté", HttpStatus.OK);
+    }
+
+
 }

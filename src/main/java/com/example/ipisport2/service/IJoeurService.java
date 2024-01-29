@@ -3,6 +3,7 @@ package com.example.ipisport2.service;
 import com.example.ipisport2.dto.ImputPlayerDto;
 import com.example.ipisport2.dto.MaxPlayerDto;
 import com.example.ipisport2.dto.playerDto;
+import com.example.ipisport2.dto.sportCountDto;
 import com.example.ipisport2.entities.JoueurEntity;
 
 import java.util.List;
@@ -31,4 +32,9 @@ public interface IJoeurService {
 
     MaxPlayerDto maxTaille(String sport, String genre);
 
+    List<sportCountDto> getSportCount();
+
+    List<sportCountDto> getSportCount(String gender);
+
+    void addClubJoueur(Integer id, Integer idClub);
 }

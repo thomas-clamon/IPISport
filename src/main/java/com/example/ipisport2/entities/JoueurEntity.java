@@ -3,6 +3,7 @@ package com.example.ipisport2.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "Joueurs")
@@ -19,6 +20,13 @@ public class JoueurEntity {
     @Column(name = "firstname")
     private String prenom;
 
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "Membres",
+            joinColumns = @JoinColumn(name = "id_membre", referencedColumnName ="ID"),
+            inverseJoinColumns = @JoinColumn(name = "id_club", referencedColumnName = "ID")
+            )
+    private List<ClubEntity> clubEntities;
 
     @Column(name = "birth_date")
     private LocalDate date_naissance;
@@ -99,5 +107,13 @@ public class JoueurEntity {
 
     public void setGenre(String genre) {
         this.genre = genre;
+    }
+
+    public List<ClubEntity> getClubEntities() {
+        return clubEntities;
+    }
+
+    public void setClubEntities(List<ClubEntity> clubEntities) {
+        this.clubEntities = clubEntities;
     }
 }
