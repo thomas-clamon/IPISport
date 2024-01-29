@@ -125,4 +125,30 @@ public class JoeurRessources {
         return new ResponseEntity(service.avgTaille(sport), HttpStatus.OK);
 
     }
+
+    @GetMapping ("count")
+    public  ResponseEntity count (@RequestParam String sport){
+
+        try {
+            Sport enumeration = Sport.valueOf(sport);
+        }
+        catch (Exception e){
+            return new ResponseEntity("sport inconnu", HttpStatus.BAD_REQUEST);
+
+        }
+            return new ResponseEntity(service.counMenber(sport), HttpStatus.OK);
+        }
+
+    @GetMapping ("maxTaille")
+    public  ResponseEntity maxTaille (){
+
+        return new ResponseEntity(service.maxTaille(), HttpStatus.OK);
+    }
+
+    @GetMapping ("maxTaille2")
+    public  ResponseEntity maxTaille (@RequestParam String sport, @RequestParam String genre){
+
+        return new ResponseEntity(service.maxTaille(sport, genre), HttpStatus.OK);
+    }
+
 }

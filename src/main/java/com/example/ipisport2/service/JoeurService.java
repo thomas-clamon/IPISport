@@ -1,6 +1,7 @@
 package com.example.ipisport2.service;
 
 import com.example.ipisport2.dto.ImputPlayerDto;
+import com.example.ipisport2.dto.MaxPlayerDto;
 import com.example.ipisport2.dto.playerDto;
 import com.example.ipisport2.entities.JoueurEntity;
 import com.example.ipisport2.repository.JoueurRepository;
@@ -97,5 +98,21 @@ public class JoeurService implements IJoeurService{
             return bon_sport;
         return sum/bon_sport;
     }
+;
+    @Override
+    public Integer counMenber(String sport) {
+        return repository.countBySport(sport);
+    }
+
+    @Override
+    public MaxPlayerDto maxTaille() {
+        return repository.max();
+    }
+
+    @Override
+    public MaxPlayerDto maxTaille(String sport, String genre) {
+        return repository.max2(sport, genre);
+    }
+
 
 }
